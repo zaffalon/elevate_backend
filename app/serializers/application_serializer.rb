@@ -1,6 +1,5 @@
 class ApplicationSerializer
     include JSONAPI::Serializer
-    #cache_options enabled: true, cache_length: 1.hour
   
     def to_h
       data = serializable_hash
