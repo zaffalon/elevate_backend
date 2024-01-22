@@ -137,6 +137,12 @@ RSpec.describe "users", type: :request do
       end
 
       response "401", "Unathorized" do
+        let!(:Authorization) { nil }
+        let(:id) { user.id }
+        run_test! 
+      end
+
+      response "401", "Unathorized" do
         let!(:api_key) { "Bearer #{Session.make!(user: user, expiry_at: Time.current - 3.year).token}" }
         let!(:Authorization) { api_key }
         let(:id) { user.id }
