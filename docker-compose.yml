@@ -1,0 +1,42 @@
+version: "3.7"
+
+
+volumes:
+  elevate_db:
+
+
+services:
+  api:
+    platform: linux/amd64
+    image: elevate_backend/master:latest
+    build: .
+    command: /bin/bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0"
+    stdin_open: true
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - '.:/app'
+      - /app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - elevate_network
+    env_file:
+      - '.env.docker'
+
+  postgres:
+    image: postgres:15.5-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - elevate_network
+    volumes:
+      - elevate_db:/var/lib/postgresql/data
+
+networks:
+  elevate_network:
+    driver: bridge
