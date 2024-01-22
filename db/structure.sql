@@ -199,6 +199,13 @@ CREATE INDEX index_game_events_on_game_id ON public.game_events USING btree (gam
 
 
 --
+-- Name: index_game_events_on_occurred_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_game_events_on_occurred_at ON public.game_events USING btree (occurred_at);
+
+
+--
 -- Name: index_game_events_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
